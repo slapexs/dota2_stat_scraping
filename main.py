@@ -49,5 +49,5 @@ pickTable = pd.DataFrame({
 
 # Export file
 # CSV
-pickTable.to_csv('picks.csv', index=False, mode='w')
+pickTable.to_csv('output/picks.csv', index=False, mode='w')
 print('Pick exported!')
