@@ -27,6 +27,13 @@ pick_lost = []
 pick_winrate = []
 pick_teamplayed = []
 
+# List of Radiant pick
+rd_played = []
+rd_win = []
+rd_lost = []
+rd_winrate = []
+rd_teamplayed = []
+
 # Append data into list
 for data in tr:
     response = findDataFromTr(data)
@@ -36,6 +43,12 @@ for data in tr:
     pick_lost.append(int(response[4]))
     pick_winrate.append(float(response[5].split('%')[0]) if response[5].split('%')[0] != '-' else 0)
     pick_teamplayed.append(float(response[6].split('%')[0]) if response[6].split('%')[0] != '-' else 0)
+
+    # Radiant
+    rd_played.append(int(response[7]))
+    rd_win.append(int(response[8]))
+    rd_lost.append(int(response[9]))
+    rd_winrate.append(float(response[10].split('%')[0]) if response[10].split('%')[0] != '-' else 0)
 
 # Create DataFrame with pandas
 pickTable = pd.DataFrame({
@@ -47,7 +60,17 @@ pickTable = pd.DataFrame({
     'Teamplayed': pick_teamplayed
 })
 
+# Radiant picks
+rdTable = pd.DataFrame({
+    'Hero': hero_name,
+    'Played': rd_played,
+    'Win': rd_win,
+    'Lost': rd_lost,
+    'Winrate': rd_winrate
+})
+
 # Export file
 # CSV
-pickTable.to_csv('output/picks.csv', index=False, mode='w')
-print('Pick exported!')
+# pickTable.to_csv('output/picks.csv', index=False, mode='w')
+# print('Pick exported!')
+rdTable.to_csv('output/radiant.csv', mode='w', index=False)
