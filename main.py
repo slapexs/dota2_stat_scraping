@@ -46,3 +46,8 @@ pickTable = pd.DataFrame({
     'Winrate': pick_winrate,
     'Teamplayed': pick_teamplayed
 })
+
+# Export file
+# CSV
+pickTable.to_csv('picks.csv', index=False, mode='w')
+print('Pick exported!')
