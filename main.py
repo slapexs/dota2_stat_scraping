@@ -41,6 +41,12 @@ dire_lost = []
 dire_winrate = []
 dire_teamplayed = []
 
+#List of Picks and Ban
+pb_ban = []
+pb_banrate = []
+pb_sumpickban = []
+pb_pickbanrate = []
+
 # Append data into list
 for data in tr:
     response = findDataFromTr(data)
@@ -62,6 +68,12 @@ for data in tr:
     dire_win.append(int(response[12]))
     dire_lost.append(int(response[13]))
     dire_winrate.append(float(response[14].split('%')[0]) if response[14].split('%')[0] != '-' else 0)
+
+    # Pick and Ban
+    pb_ban.append(int(response[15]))
+    pb_banrate.append(float(response[16].split('%')[0]))
+    pb_sumpickban.append(int(response[17]))
+    pb_pickbanrate.append(float(response[18].split('%')[0]))
 
 # Create DataFrame with pandas
 pickTable = pd.DataFrame({
@@ -91,9 +103,25 @@ direTable = pd.DataFrame({
     'Winrate': dire_winrate
 })
 
+# Pick and Ban
+pickbanTable = pd.DataFrame({
+    'Hero': hero_name,
+    'Pick': pick_played,
+    'Ban': pb_ban,
+    'PickAndBan': pb_sumpickban,
+    'Banrate': pb_banrate,
+    'PickBanRate': pb_pickbanrate
+})
+
+# Pick and Bans
+# pickBanTable = pd.DataFrame({
+#     'Pick'
+# })
+
 # Export file
 # CSV
 # pickTable.to_csv('output/picks.csv', index=False, mode='w')
 # print('Pick exported!')
 # rdTable.to_csv('output/radiant.csv', mode='w', index=False)
-direTable.to_csv('output/dire.csv', mode='w', index=False)
+# direTable.to_csv('output/dire.csv', mode='w', index=False)
+pickbanTable.to_csv('output/pickban.csv', mode='w', index=False)
