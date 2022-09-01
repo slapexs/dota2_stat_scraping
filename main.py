@@ -1,6 +1,6 @@
-from operator import index
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 url = 'https://liquipedia.net/dota2/ESL_One/Malaysia/2022/Statistics'
 res_data = requests.get(url)
@@ -36,3 +36,13 @@ for data in tr:
     pick_lost.append(int(response[4]))
     pick_winrate.append(float(response[5].split('%')[0]) if response[5].split('%')[0] != '-' else 0)
     pick_teamplayed.append(float(response[6].split('%')[0]) if response[6].split('%')[0] != '-' else 0)
+
+# Create DataFrame with pandas
+pickTable = pd.DataFrame({
+    'Hero': hero_name,
+    'Played': pick_played,
+    'Win': pick_win,
+    'Lost': pick_lost,
+    'Winrate': pick_winrate,
+    'Teamplayed': pick_teamplayed
+})
